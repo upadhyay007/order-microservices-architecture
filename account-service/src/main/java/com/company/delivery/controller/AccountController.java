@@ -14,12 +14,20 @@ import com.company.delivery.model.User;
 
 @RestController
 public class AccountController {
-
+	/**
+	 * 
+	 * @return
+	 */
 	@GetMapping("/hello")
 	private String hello() {
 		return "Account Service is up and running!!";
 	}
 
+	/**
+	 * 
+	 * @param customer
+	 * @return
+	 */
 	@PostMapping("/account")
 	private Accounts getAccountDetails(@RequestBody Customer customer) {
 		// create account
@@ -27,6 +35,11 @@ public class AccountController {
 		return new Accounts();
 	}
 
+	/**
+	 * 
+	 * @param accountId
+	 * @param product
+	 */
 	@PostMapping("/add-product")
 	public void addProduct(@RequestHeader("co-relation-id") String accountId, @RequestBody Product product) {
 		System.out.println("Adding  product");
@@ -34,6 +47,11 @@ public class AccountController {
 		// call feign client to add product
 	}
 
+	/**
+	 * 
+	 * @param accountId
+	 * @param productId
+	 */
 	@GetMapping("/get-product")
 	public void getProductDetails(@RequestHeader("co-relation-id") String accountId, String productId) {
 		System.out.println("get product details");
@@ -41,6 +59,10 @@ public class AccountController {
 		// related with account
 	}
 
+	/**
+	 * 
+	 * @param user
+	 */
 	@PostMapping("/add-user")
 	public void addUser(User user) {
 		System.out.println("Add user");
@@ -48,18 +70,31 @@ public class AccountController {
 		// Add it to local user list also
 	}
 
+	/**
+	 * 
+	 * @param user
+	 */
 	@GetMapping("/get-user")
 	public void getUser(User user) {
 		System.out.println("get user from my own account");
 		// Give request to local/own user list
 	}
 
+	/**
+	 * 
+	 * @param user
+	 */
 	@GetMapping("/search-user")
 	public void searchUser(User user) {
 		System.out.println("search user from user services");
 		// Search user into user services
 	}
 
+	/**
+	 * 
+	 * @param accountId
+	 * @param order
+	 */
 	@PostMapping("/create-order")
 	public void createOrder(@RequestHeader("co-relation-id") String accountId, Order order) {
 		System.out.println("Pleace order for user");
