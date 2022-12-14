@@ -19,7 +19,7 @@ public class AccountController {
 	 * @return
 	 */
 	@GetMapping("/hello")
-	private String hello() {
+	public String hello() {
 		return "Account Service is up and running!!";
 	}
 
@@ -29,7 +29,7 @@ public class AccountController {
 	 * @return
 	 */
 	@PostMapping("/account")
-	private Accounts getAccountDetails(@RequestBody Customer customer) {
+	public Accounts getAccountDetails(@RequestBody Customer customer) {
 		// create account
 		// customer.getCustomerId();
 		return new Accounts();
