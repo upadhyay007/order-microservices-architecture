@@ -1,5 +1,6 @@
 package com.company.delivery.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,9 +12,13 @@ import com.company.delivery.model.Customer;
 import com.company.delivery.model.Order;
 import com.company.delivery.model.Product;
 import com.company.delivery.model.User;
+import com.company.delivery.service.AccountService;
 
 @RestController
 public class AccountController {
+	@Autowired
+	private AccountService accountService;
+
 	/**
 	 * 
 	 * @return
@@ -32,7 +37,8 @@ public class AccountController {
 	public Accounts getAccountDetails(@RequestBody Customer customer) {
 		// create account
 		// customer.getCustomerId();
-		return new Accounts();
+		Accounts account = accountService.getAccountDetails(customer.getCustomerId());
+		return account;
 	}
 
 	/**
