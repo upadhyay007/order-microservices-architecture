@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.company.delivery.model.Product;
 import com.company.delivery.service.ProductServices;
 
 @RestController
+//@RequestMapping("/")
 public class ProductController {
 	@Autowired
 	private ProductServices productService;
@@ -57,8 +59,8 @@ public class ProductController {
 	}
 
 	@GetMapping("/product-all")
-	public ResponseEntity<?> getAllProduct(@RequestHeader("co-related-id") String coRelatedId, Boolean active) {
-		List<Product> products = productService.getAllProduct(coRelatedId, active);
+	public ResponseEntity<?> getAllProduct(@RequestHeader("co-related-id") String coRelatedId) {
+		List<Product> products = productService.getAllProduct(coRelatedId, false);
 		return new ResponseEntity(products, HttpStatus.OK);
 	}
 }

@@ -63,12 +63,24 @@ public class AccountController {
 	 * 
 	 * @param accountId
 	 * @param productId
+	 * @return 
 	 */
 	@GetMapping("/get-product")
-	public void getProductDetails(@RequestHeader("co-relation-id") String accountId, String productId) {
+	public ResponseEntity<?> getProductDetails(@RequestHeader("co-relation-id") String accountId, String productId) {
 		System.out.println("get product details");
 		// If Product Id is Passed ...It will return specific product else all products
 		// related with account
+		return null;
+	}
+	
+	
+	@GetMapping("/get-all-product")
+	public ResponseEntity<?> getAllProductDetails(@RequestHeader("co-relation-id") String accountId, String productId) {
+		System.out.println("get product details");
+		// If Product Id is Passed ...It will return specific product else all products
+		// related with account
+		return productFeignClient.getAllProduct(accountId);
+		//return null;
 	}
 
 	/**

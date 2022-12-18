@@ -46,8 +46,8 @@ public class ProductServicesImpl implements ProductServices{
 
 	@Override
 	public List<Product> getAllProduct(String coRelatedId, Boolean active) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Product> findByRelatedAccountNumber = repository.findByRelatedAccountNumber(Long.valueOf(coRelatedId));
+		return findByRelatedAccountNumber;
 	}
 
 }
