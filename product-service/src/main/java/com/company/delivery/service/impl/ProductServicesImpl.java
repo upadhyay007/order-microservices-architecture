@@ -16,8 +16,8 @@ public class ProductServicesImpl implements ProductServices{
 
 	@Override
 	public void addProduct(String coRelatedId, Product product) {
-		// TODO Auto-generated method stub
-		
+		product.setRelatedAccountNumber(Integer.valueOf(coRelatedId));
+		repository.save(product);
 	}
 
 	@Override

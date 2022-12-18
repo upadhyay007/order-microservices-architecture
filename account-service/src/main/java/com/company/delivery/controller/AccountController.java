@@ -1,12 +1,14 @@
 package com.company.delivery.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.company.delivery.client.ProductFeignClient;
 import com.company.delivery.model.Accounts;
 import com.company.delivery.model.Customer;
 import com.company.delivery.model.Order;
@@ -19,6 +21,8 @@ public class AccountController {
 	@Autowired
 	private AccountService accountService;
 
+	@Autowired
+	private ProductFeignClient productFeignClient;
 	/**
 	 * 
 	 * @return
@@ -47,10 +51,12 @@ public class AccountController {
 	 * @param product
 	 */
 	@PostMapping("/add-product")
-	public void addProduct(@RequestHeader("co-relation-id") String accountId, @RequestBody Product product) {
+	public ResponseEntity<?> addProduct(@RequestHeader("co-relation-id") String accountId, @RequestBody Product product) {
 		System.out.println("Adding  product");
 		// give request to product services to add the product
 		// call feign client to add product
+		return productFeignClient.addProduct(accountId, product);
+		
 	}
 
 	/**
