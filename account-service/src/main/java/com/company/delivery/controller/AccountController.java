@@ -52,11 +52,10 @@ public class AccountController {
 	 */
 	@PostMapping("/add-product")
 	public ResponseEntity<?> addProduct(@RequestHeader("co-relation-id") String accountId, @RequestBody Product product) {
-		System.out.println("Adding  product");
+		System.out.println("Adding  product  : " +product.toString());
 		// give request to product services to add the product
 		// call feign client to add product
-		return productFeignClient.addProduct(accountId, product);
-		
+		return productFeignClient.addProduct(accountId, product);		
 	}
 
 	/**
@@ -92,6 +91,7 @@ public class AccountController {
 		System.out.println("Add user");
 		// Give request to User Service to add user
 		// Add it to local user list also
+		
 	}
 
 	/**

@@ -1,5 +1,7 @@
 package com.company.delivery.model;
 
+import java.util.Arrays;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -80,6 +82,13 @@ public class Product {
 
 	public void setRelatedAccountNumber(long relatedAccountNumber) {
 		this.relatedAccountNumber = relatedAccountNumber;
+	}
+
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", productName=" + productName + ", productid=" + productid + ", qty=" + qty
+				+ ", price=" + price + ", active=" + active + ", availableDays=" + Arrays.toString(availableDays)
+				+ ", relatedAccountNumber=" + relatedAccountNumber + "]";
 	}
 
 }

@@ -30,6 +30,7 @@ public class ProductController {
 
 	@PostMapping("/product")
 	public ResponseEntity<?> addProduct(@RequestHeader("co-related-id") String coRelatedId, Product product) {
+		System.out.println("ProductController : co-related-id->"+ coRelatedId + " product : " + product.toString());
 		productService.addProduct(coRelatedId, product);
 		return new ResponseEntity(HttpStatus.CREATED);
 	}

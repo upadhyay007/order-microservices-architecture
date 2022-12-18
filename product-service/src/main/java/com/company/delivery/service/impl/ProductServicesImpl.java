@@ -17,6 +17,8 @@ public class ProductServicesImpl implements ProductServices{
 	@Override
 	public void addProduct(String coRelatedId, Product product) {
 		product.setRelatedAccountNumber(Integer.valueOf(coRelatedId));
+		System.out.println("product : "+ product.toString());
+		
 		repository.save(product);
 	}
 
