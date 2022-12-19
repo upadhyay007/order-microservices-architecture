@@ -32,28 +32,32 @@ public class UserController {
 	}
 
 	@PutMapping("/user")
-	public void updateUser(Users user) {
-
+	public ResponseEntity<?> updateUser(Users user) {
+		Users add = userService.update(user);
+		return new ResponseEntity(add, HttpStatus.OK);
 	}
 
 	@PatchMapping("/user")
-	public void partialUpdateUser(Users user) {
-
+	public ResponseEntity<?> partialUpdateUser(Users user) {
+		return new ResponseEntity(HttpStatus.OK);
 	}
 
 	@GetMapping("/user")
-	public void getUser(String userId) {
-
+	public ResponseEntity<?> getUser(String userId) {
+		Users add = userService.getUserById(userId);
+		return new ResponseEntity(add, HttpStatus.OK);
 	}
 
 	@GetMapping("/user-search")
-	public void searchUser(Users user) {
-
+	public ResponseEntity<?> searchUser(Users user) {
+		Users add = userService.searchUser(user);
+		return new ResponseEntity(HttpStatus.OK);
 	}
 
 	@DeleteMapping("/user")
-	public void deletaUser(String userId) {
-
+	public ResponseEntity<?> deletaUser(String userId) {
+		userService.delete(userId);
+		return new ResponseEntity(HttpStatus.OK);
 	}
 
 }
