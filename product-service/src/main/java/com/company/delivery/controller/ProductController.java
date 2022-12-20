@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.company.delivery.model.Product;
@@ -19,7 +19,7 @@ import com.company.delivery.service.ProductServices;
 
 @RestController
 //@RequestMapping("/")
-public class ProductController {
+public class ProductController { 
 	@Autowired
 	private ProductServices productService;
 
@@ -29,20 +29,21 @@ public class ProductController {
 	}
 
 	@PostMapping("/product")
-	public ResponseEntity<?> addProduct(@RequestHeader("co-related-id") String coRelatedId, Product product) {
+	public ResponseEntity<?> addProduct(@RequestHeader("co-related-id") String coRelatedId, @RequestBody Product product) {
+		System.out.println("Prdouct --> " + product.toString());
 		System.out.println("ProductController : co-related-id->"+ coRelatedId + " product : " + product.toString());
 		productService.addProduct(coRelatedId, product);
 		return new ResponseEntity(HttpStatus.CREATED);
 	}
 
 	@PutMapping("/product")
-	public ResponseEntity<?> updateProduct(@RequestHeader("co-related-id") String coRelatedId, Product product) {
+	public ResponseEntity<?> updateProduct(@RequestHeader("co-related-id") String coRelatedId, @RequestBody Product product) {
 		productService.updateProduct(coRelatedId, product);
 		return new ResponseEntity(HttpStatus.OK);
 	}
 
 	@PatchMapping("/product")
-	public ResponseEntity<?> partialProduct(@RequestHeader("co-related-id") String coRelatedId, Product product) {
+	public ResponseEntity<?> partialProduct(@RequestHeader("co-related-id") String coRelatedId, @RequestBody Product product) {
 		productService.partialProduct(coRelatedId, product);
 		return new ResponseEntity(HttpStatus.OK);
 	}

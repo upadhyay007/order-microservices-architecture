@@ -6,12 +6,12 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.company.delivery.model.Product;
+import com.company.delivery.model.ProductModel;
 
-@FeignClient("product") // Its should be the logical name, as declare in eureka server  
+@FeignClient("product") // Its should be the logical name, as declare in Discovery server  
 public interface ProductFeignClient {
 	@RequestMapping(method = RequestMethod.POST, value = "product", consumes = "application/json")
-	ResponseEntity<?> addProduct(@RequestHeader("co-related-id") String coRelatedId, Product product);
+	ResponseEntity<?> addProduct(@RequestHeader("co-related-id") String coRelatedId, ProductModel product);
 	
 	@RequestMapping(method = RequestMethod.GET, value = "user", consumes = "application/json")
 	ResponseEntity<?> getAllProduct(@RequestHeader("co-related-id") String coRelatedId);

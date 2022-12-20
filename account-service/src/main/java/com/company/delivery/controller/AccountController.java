@@ -1,8 +1,10 @@
 package com.company.delivery.controller;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,11 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.company.delivery.client.ProductFeignClient;
 import com.company.delivery.client.UserFeignClient;
-import com.company.delivery.model.Accounts;
+import com.company.delivery.entity.Accounts;
 import com.company.delivery.model.Customer;
 import com.company.delivery.model.Order;
-import com.company.delivery.model.Product;
-import com.company.delivery.model.Users;
+import com.company.delivery.model.ProductModel;
+import com.company.delivery.model.UsersModel;
 import com.company.delivery.service.AccountService;
 
 @RestController
@@ -57,11 +59,14 @@ public class AccountController {
 	 */
 	@PostMapping("/add-product")
 	public ResponseEntity<?> addProduct(@RequestHeader("co-relation-id") String accountId,
-			@RequestBody Product product) {
+			@RequestBody ProductModel product) {
 		System.out.println("Adding  product  : " + product.toString());
-		// give request to product services to add the product
-		// call feign client to add product		
-		return productFeignClient.addProduct(accountId, product);
+		// first add the product to the account micro services
+		ProductModel addProduct = accountService.addProduct(accountId, product);
+		// call feign client to add product
+		System.out.println("Account -> " + addProduct.toString());
+		return productFeignClient.addProduct(accountId, addProduct);
+
 	}
 
 	/**
@@ -92,20 +97,19 @@ public class AccountController {
 	 * @param user
 	 */
 	@PostMapping("/add-user")
-	public ResponseEntity<?> addUser(Users user) {
+	public ResponseEntity<?> addUser(UsersModel user) {
 		System.out.println("Add user");
 		// Give request to User Service to add user
 		// Add it to local user list also
 		return userFeignClient.addUser(user);
 	}
 
-	
 	/**
 	 * 
 	 * @param user
 	 */
 	@GetMapping("/get-user")
-	public void getUser(Users user) {
+	public void getUser(UsersModel user) {
 		System.out.println("get user from my own account");
 		// Give request to local/own user list
 		userFeignClient.getUser(user.getUserId());
@@ -116,7 +120,7 @@ public class AccountController {
 	 * @param user
 	 */
 	@GetMapping("/search-user")
-	public void searchUser(Users user) {
+	public void searchUser(UsersModel user) {
 		System.out.println("search user from user services");
 		// Search user into user services
 	}
@@ -125,13 +129,13 @@ public class AccountController {
 	 * 
 	 * @param accountId
 	 * @param order
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	@PostMapping("/create-order")
 	public void createOrder(@RequestHeader("co-relation-id") String accountId, Order order) throws IOException {
 		System.out.println("Pleace order for user");
 		// push order creation request to queue
-		accountService.createOrder(accountId,order);
+		accountService.createOrder(accountId, order);
 	}
 
 }

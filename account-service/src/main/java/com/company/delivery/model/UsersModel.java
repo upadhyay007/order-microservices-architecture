@@ -1,6 +1,6 @@
 package com.company.delivery.model;
 
-public class Users {
+public class UsersModel {
 	private String userId;
 	private String username;
 	private String Address;
