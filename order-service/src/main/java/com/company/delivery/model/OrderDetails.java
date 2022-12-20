@@ -1,6 +1,14 @@
 package com.company.delivery.model;
 
-public class OrderDetails {
+import java.io.Serializable;
+import java.util.Arrays;
+
+public class OrderDetails  implements Serializable{
+	 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5237692140552684097L;
 	private int id;
 	private String orderid;
 	private String qty;
@@ -43,6 +51,11 @@ public class OrderDetails {
 	}
 	public void setAvailableDays(int[] availableDays) {
 		this.availableDays = availableDays;
+	}
+	@Override
+	public String toString() {
+		return "OrderDetails [id=" + id + ", orderid=" + orderid + ", qty=" + qty + ", price=" + price + ", active="
+				+ active + ", availableDays=" + Arrays.toString(availableDays) + "]";
 	}
 
 }

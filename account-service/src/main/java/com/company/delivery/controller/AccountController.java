@@ -89,7 +89,6 @@ public class AccountController {
 		// If Product Id is Passed ...It will return specific product else all products
 		// related with account
 		return productFeignClient.getAllProduct(accountId);
-		// return null;
 	}
 
 	/**
@@ -132,7 +131,7 @@ public class AccountController {
 	 * @throws IOException
 	 */
 	@PostMapping("/create-order")
-	public void createOrder(@RequestHeader("co-relation-id") String accountId, Order order) throws IOException {
+	public void createOrder(@RequestHeader("co-relation-id") String accountId, @RequestBody Order order) throws IOException {
 		System.out.println("Pleace order for user");
 		// push order creation request to queue
 		accountService.createOrder(accountId, order);

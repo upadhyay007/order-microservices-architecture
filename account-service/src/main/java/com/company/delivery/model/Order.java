@@ -53,6 +53,11 @@ public class Order implements Serializable {
 	public void setAccountId(String accountId) {
 		this.accountId = accountId;
 	}
+	@Override
+	public String toString() {
+		return "Order [id=" + id + ", orderId=" + orderId + ", UserId=" + UserId + ", orderCreationDate="
+				+ orderCreationDate + ", orderDetails=" + orderDetails + ", accountId=" + accountId + "]";
+	}
 	
 
 }

@@ -46,10 +46,11 @@ public class AccountImpl implements AccountService {
 
 		byte[] byteArray = bos.toByteArray();
 		bos.close();
-
+		
+		System.out.println("Order Pleaced---> " + order.toString());
+		
 		Message message = MessageBuilder.withBody(byteArray).build();
 		rabbitTemplate.send("Order", "oid", message);
-
 	}
 
 	@Override

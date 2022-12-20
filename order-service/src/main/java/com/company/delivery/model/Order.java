@@ -1,9 +1,14 @@
 package com.company.delivery.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Order {
+public class Order implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5237692140552684097L;
 	private int id;
 	private String orderId;
 	private String UserId;
@@ -41,6 +46,12 @@ public class Order {
 	public void setOrderDetails(OrderDetails orderDetails) {
 		this.orderDetails = orderDetails;
 	}
+	@Override
+	public String toString() {
+		return "Order [id=" + id + ", orderId=" + orderId + ", UserId=" + UserId + ", orderCreationDate="
+				+ orderCreationDate + ", orderDetails=" + orderDetails + "]";
+	}
+	
 	
 
 }
