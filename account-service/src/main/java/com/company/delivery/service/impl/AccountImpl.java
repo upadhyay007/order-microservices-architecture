@@ -10,6 +10,7 @@ import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageBuilder;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,13 @@ public class AccountImpl implements AccountService {
 	@Autowired
 	private ProductRepository productRepo;
 	@Autowired
-	private RabbitTemplate rabbitTemplate;
+	private RabbitTemplate rabbitTemplate;  
+	
+	@Value("${spring.rabbitmq.exchange}")
+    private String exchange;
+
+    @Value("${spring.rabbitmq.routingkey}")
+    private String routingkey;
 
 	@Override
 	public Accounts getAccountDetails(int customerId) {
@@ -38,19 +45,25 @@ public class AccountImpl implements AccountService {
 	@Override
 	public void createOrder(String accountId, Order order) throws IOException {
 		order.setAccountId(accountId);
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		ObjectOutput out = new ObjectOutputStream(bos);
-		out.writeObject(order);
-		out.flush();
-		out.close();
+//		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+//		ObjectOutput out = new ObjectOutputStream(bos);
+//		out.writeObject(order);
+//		out.flush();
+//		out.close();
+//
+//		byte[] byteArray = bos.toByteArray();
+//		bos.close();
+//		
+//		System.out.println("Order Pleaced---> " + order.toString());
+//		
+//		Message message = MessageBuilder.withBody(byteArray).build();
+		
+		//rabbitTemplate.send("Order", "oid", message);
+	
+	    rabbitTemplate.convertAndSend(exchange,routingkey, order);
 
-		byte[] byteArray = bos.toByteArray();
-		bos.close();
+	    
 		
-		System.out.println("Order Pleaced---> " + order.toString());
-		
-		Message message = MessageBuilder.withBody(byteArray).build();
-		rabbitTemplate.send("Order", "oid", message);
 	}
 
 	@Override

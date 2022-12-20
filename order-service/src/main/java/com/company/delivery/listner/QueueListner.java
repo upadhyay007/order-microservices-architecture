@@ -10,9 +10,10 @@ import org.springframework.stereotype.Service;
 
 import com.company.delivery.model.Order;
 
-@Service
+//@Service
 public class QueueListner {
-	@RabbitListener(queues = "OrderPleaced")
+
+	@RabbitListener(queues = "OrderPleaced1")
 	public void messageFromQueue(byte[] message) throws IOException, ClassNotFoundException {
 
 		ByteArrayInputStream bis = new ByteArrayInputStream(message);
