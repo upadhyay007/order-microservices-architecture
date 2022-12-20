@@ -13,6 +13,6 @@ public interface ProductFeignClient {
 	@RequestMapping(method = RequestMethod.POST, value = "product", consumes = "application/json")
 	ResponseEntity<?> addProduct(@RequestHeader("co-related-id") String coRelatedId, ProductModel product);
 	
-	@RequestMapping(method = RequestMethod.GET, value = "user", consumes = "application/json")
+	@RequestMapping(method = RequestMethod.GET, value = "product-all", consumes = "application/json")
 	ResponseEntity<?> getAllProduct(@RequestHeader("co-related-id") String coRelatedId);
 }
