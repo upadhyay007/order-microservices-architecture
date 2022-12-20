@@ -1,5 +1,7 @@
 package com.company.delivery.controller;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,7 +60,7 @@ public class AccountController {
 			@RequestBody Product product) {
 		System.out.println("Adding  product  : " + product.toString());
 		// give request to product services to add the product
-		// call feign client to add product
+		// call feign client to add product		
 		return productFeignClient.addProduct(accountId, product);
 	}
 
@@ -123,9 +125,10 @@ public class AccountController {
 	 * 
 	 * @param accountId
 	 * @param order
+	 * @throws IOException 
 	 */
 	@PostMapping("/create-order")
-	public void createOrder(@RequestHeader("co-relation-id") String accountId, Order order) {
+	public void createOrder(@RequestHeader("co-relation-id") String accountId, Order order) throws IOException {
 		System.out.println("Pleace order for user");
 		// push order creation request to queue
 		accountService.createOrder(accountId,order);

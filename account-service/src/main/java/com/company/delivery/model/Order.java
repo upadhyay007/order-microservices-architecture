@@ -1,15 +1,21 @@
 package com.company.delivery.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Order {
+public class Order implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5237692140552684097L;
 	private int id;
 	private String orderId;
 	private String UserId;
 	private Date orderCreationDate;
 	//private OrderType type;
 	private OrderDetails orderDetails;
+	private String accountId;
 	
 	public int getId() {
 		return id;
@@ -40,6 +46,12 @@ public class Order {
 	}
 	public void setOrderDetails(OrderDetails orderDetails) {
 		this.orderDetails = orderDetails;
+	}
+	public String getAccountId() {
+		return accountId;
+	}
+	public void setAccountId(String accountId) {
+		this.accountId = accountId;
 	}
 	
 
