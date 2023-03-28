@@ -1,20 +1,24 @@
 package com.company.delivery.controller;
 
 import java.io.IOException;
-import java.util.UUID;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.WebRequest;
 
 import com.company.delivery.client.ProductFeignClient;
 import com.company.delivery.client.UserFeignClient;
 import com.company.delivery.entity.Accounts;
+import com.company.delivery.exception.ErrorMessageObject;
+import com.company.delivery.exception.UserNotFountException;
 import com.company.delivery.model.Customer;
 import com.company.delivery.model.Order;
 import com.company.delivery.model.ProductModel;
@@ -33,12 +37,19 @@ public class AccountController {
 	/**
 	 * 
 	 * @return
+	 * @throws Exception
 	 */
 	@GetMapping("/hello")
-	public String hello() {
-		return "Account Service is up and running!!";
+	public String hello() throws Exception {
+		throw new UserNotFountException("UserNotFountException Exception from hello !!");
+		// return "Account Service is up and running!!";
 	}
-
+	@ExceptionHandler(UserNotFountException.class)
+	public ResponseEntity<Object> handerUserNotFountException(UserNotFountException exception, WebRequest request) {
+		ErrorMessageObject errorMessageObject = new ErrorMessageObject(new Date(), exception.getLocalizedMessage());
+		System.out.println(" AccountController ---handerUserNotFountException !!");
+		return new ResponseEntity<Object>(errorMessageObject, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 	/**
 	 * 
 	 * @param customer
@@ -131,7 +142,8 @@ public class AccountController {
 	 * @throws IOException
 	 */
 	@PostMapping("/create-order")
-	public void createOrder(@RequestHeader("co-relation-id") String accountId, @RequestBody Order order) throws IOException {
+	public void createOrder(@RequestHeader("co-relation-id") String accountId, @RequestBody Order order)
+			throws IOException {
 		System.out.println("Pleace order for user");
 		// push order creation request to queue
 		accountService.createOrder(accountId, order);

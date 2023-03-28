@@ -16,6 +16,9 @@ public class RabbitMQConfig {
     @Value("${spring.rabbitmq.queue}")
     private String queue;
 
+    @Value("${spring.rabbitmq.trackqueue.track.order.queue}")
+    private String trackingqueue;
+    
     @Value("${spring.rabbitmq.exchange}")
     private String exchange;
 
@@ -35,6 +38,11 @@ public class RabbitMQConfig {
     Queue queue() {
         return new Queue(queue, true);
     }
+    
+    @Bean
+    Queue trackingqueue() { 
+        return new Queue(trackingqueue, true);
+    }
 
     @Bean
     Exchange myExchange() {
@@ -45,6 +53,14 @@ public class RabbitMQConfig {
     Binding binding() {
         return BindingBuilder
                 .bind(queue())
+                .to(myExchange())
+                .with(routingKey)
+                .noargs();
+    }
+    @Bean
+    Binding bindingtrackingqueue() {
+        return BindingBuilder
+                .bind(trackingqueue())
                 .to(myExchange())
                 .with(routingKey)
                 .noargs();
